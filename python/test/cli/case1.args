@@ -1,0 +1,13 @@
+--R-up=0.1
+--R-down=0.1
+--spin-mixing-angle=0.0
+--eV=0.10
+--step-size=0.001
+--energy-broadening=0.0000001
+--energy-cutoff=20
+--order-parameter-cutoff-smoothing=2
+--n-phi=3
+--T=0.1
+--phi-min=0.3
+--phi-max=1.5
+--show-progress

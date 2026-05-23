@@ -1,0 +1,106 @@
+\documentclass[aps,prb,amsmath,amssymb]{revtex4}
+\usepackage{bm}
+\usepackage{graphicx}
+
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\Img}{\mathrm{Im}}
+\DeclareMathOperator{\Rea}{\mathrm{Re}}
+\DeclareMathOperator{\Sp}{\mathrm{Sp}}
+\DeclareMathOperator{\tr}{\mathrm{tr}}
+\DeclareMathOperator{\arctanh}{arctanh}
+
+
+
+\begin{document}
+
+
+\title{Nonequilibrium Josephson Effect in SIS Junctions}
+\author{Mikhail S. Kalenkov}
+\affiliation{I.E. Tamm Department of Theoretical Physics, P.N. Lebedev Physical Institute, 119991 Moscow, Russia}
+
+\date{\today}
+\begin{abstract}
+
+\end{abstract}
+\maketitle
+
+This document summarizes the equations solved numerically in the code and specifies the conventions used throughout the calculations.
+
+\section{Model}
+
+The nonequilibrium Josephson current in an SIS junction can be represented in a compact matrix form (for details see Ref.~\onlinecite{KZ24})
+\begin{equation}
+I(t) = 
+\dfrac{e}{8}
+\Sp \Bigl\{
+[\mathbb{S}_n + \Gamma]^{-1}
+(H - \Gamma H \Gamma^+)
+\\\times
+[\mathbb{S}_n^+ + \Gamma^+]^{-1}(\mathbb{S}_n^+
+\hat \tau_3 \hat o_3
+\mathbb{S}_n - \hat \tau_3 \hat o_3)
+\Bigr\},
+\end{equation}
+where $I$ denotes the Josephson current carried by a single conducting channel that hosts quasiparticle states with both spin orientations, $\hat \tau_3$ and $\hat o_3$ are Pauli matrices in Nambu and trajectory spaces, respectively, and $\mathbb{S}_n$ is the normal-state interface scattering matrix.
+
+For simplicity we assume that the interface preserves the quasiparticle spin projection. Then the scattering matrix for a given spin projection $\sigma=\pm1$ has the form
+\begin{equation}
+[\mathbb{S}_n]_{\sigma}
+=
+\begin{pmatrix}
+\sqrt{R_{\sigma}}  & -i \sqrt{D_{\sigma}}  &  0 & 0
+\\
+-i \sqrt{D_{\sigma}}  & \sqrt{R_{\sigma}}  & 0 & 0 \\
+0 & 0 & \sqrt{R_{-\sigma}}  & i \sqrt{D_{-\sigma}}
+\\
+0 & 0 & i \sqrt{D_{-\sigma}}  & \sqrt{R_{-\sigma}}  \\
+\end{pmatrix}
+e^{-i\sigma\theta/2},
+\end{equation}
+is the normal-state interface transmission probability for quasiparticles with spin projection $\sigma$, and $\theta$ is the spin-mixing angle.
+
+For a given time-dependent voltage bias $V(t)$, the superconducting phase difference across the junction reads
+\begin{equation}
+\varphi (t)= 2e\int^tV(t')dt'.
+\label{phi}
+\end{equation}
+The kernels of the operators $\Gamma$ and $H$ are then given by
+\begin{gather}
+\Gamma(t,t') = e^{i\varphi(t) \hat \tau_3 \hat o_3/4} \Gamma_{eq}(t-t') e^{-i\varphi(t') \hat \tau_3 \hat o_3/4},
+\\
+H(t,t') = e^{i\varphi(t) \hat \tau_3 \hat o_3/4} H_{eq}(t-t') e^{-i\varphi(t') \hat \tau_3 \hat o_3/4},
+\end{gather}
+where 
+\begin{gather}
+H_{eq}(t-t')
+=
+\int_{-\infty}^{\infty}\dfrac{d \varepsilon}{2\pi}
+h_0(\varepsilon) e^{-i\varepsilon(t - t')},
+\quad h_0(\varepsilon) = \tanh\dfrac{\varepsilon}{2\pi},
+\\
+\Gamma_{eq}(t-t')
+=
+\hat \tau_1
+\int_{-\infty}^{\infty}\dfrac{d \varepsilon}{2\pi}
+a(\varepsilon) e^{-i\varepsilon(t - t')},
+\quad a(\varepsilon) = \dfrac{-\varepsilon + \sqrt{\varepsilon^2 - |\Delta|^2}}{|\Delta|}.
+\end{gather}
+We assume that the superconducting order parameter is spatially uniform in both leads and has the same magnitude $|\Delta|$, corresponding to a symmetric junction.
+
+For a time-independent voltage bias, evaluation of the current can be reduced to solving matrix recurrence relations derived in Ref.~\onlinecite{KZ24}. These recurrence relations are implemented numerically in the present code.
+
+For reference, in the limit of a transparent junction biased by a small voltage $|eV| \ll |\Delta|$ one obtain \cite{AB1} 
+\begin{equation}
+I = e |\Delta|  |\sin(eVt)| \tanh \dfrac{|\Delta|}{2T} \sgn V.
+\end{equation}
+
+
+
+
+\begin{thebibliography}{99}
+\bibitem{KZ24} M.S. Kalenkov and A.D. Zaikin, Absence of fractional ac Josephson effect in superconducting junctions,
+Phys. Rev. B 110, 134521 (2024).
+\bibitem{AB1} D. Averin and A. Bardas, ac Josephson Effect in a Single Quantum Channel, Phys. Rev. Lett. \textbf{75}, 1831 (1995).
+\end{thebibliography}
+
+\end{document}
