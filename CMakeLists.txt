@@ -27,8 +27,9 @@ target_include_directories(josephson_lib
 )
 
 target_link_libraries(josephson_lib
-    Eigen3::Eigen
-    PUBLIC OpenMP::OpenMP_CXX
+    PUBLIC
+        Eigen3::Eigen
+        OpenMP::OpenMP_CXX
 )
 
 add_executable(josephson
