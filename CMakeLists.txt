@@ -7,7 +7,7 @@ project(josephson LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-find_package(Boost REQUIRED COMPONENTS program_options filesystem system)
+find_package(Boost REQUIRED COMPONENTS program_options filesystem system unit_test_framework)
 find_package(Eigen3 REQUIRED)
 find_package(OpenMP REQUIRED)
 find_package(Python REQUIRED COMPONENTS Interpreter Development)
@@ -65,6 +65,7 @@ target_link_libraries(josephson_test
         Boost::filesystem
         Boost::system
         Boost::program_options
+        Boost::unit_test_framework
 )
 
 enable_testing()
