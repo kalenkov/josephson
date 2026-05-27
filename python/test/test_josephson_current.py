@@ -1,11 +1,11 @@
 # Copyright (c) 2026 Mikhail S. Kalenkov <mikhail.kalenkov@gmail.com>
 # Licensed under the MIT License
+
 import sys
 from pathlib import Path
 import pytest
 import csv
 
-# path to .so (build/)
 root = Path(__file__).resolve().parents[2]
 sys.path.append(str(root / "build"))
 sys.path.append(str(root / "build-cmake"))
@@ -14,11 +14,13 @@ datafile = root / "test" / "data.csv"
 import josephson
 
 
-def load_cases():
+def load_cases(fast_mode=False):
     cases = []
     with open(datafile, newline="") as f:
         reader = csv.DictReader(f)
         for row in reader:
+            if fast_mode and row["label"] != "fast":
+                continue
             cases.append(
                 {
                     "R_up": float(row["R_up"]),
@@ -37,9 +39,14 @@ def load_cases():
     return cases
 
 
-@pytest.mark.parametrize("case", load_cases())
-def test_regression(case):
+def pytest_generate_tests(metafunc):
+    if "case" not in metafunc.fixturenames:
+        return
+    fast_mode = metafunc.config.getoption("--fast")
+    metafunc.parametrize("case", load_cases(fast_mode=fast_mode))
 
+
+def test_regression(case):
     cfg = {
         "R_up": case["R_up"],
         "R_down": case["R_down"],
@@ -52,9 +59,9 @@ def test_regression(case):
         "order_parameter_cutoff_smoothing": case["order_parameter_cutoff_smoothing"],
         "show_progress": False,
     }
-
     jc = josephson.JosephsonCurrent(cfg)
-
     result = jc.evaluate(case["phi"])
-    # print(f"[REGRESSION] phi={case['phi']} result={result} expected={case['current']} diff={result - case['current']}")
-    assert result == pytest.approx(case["current"], rel=1e-10)
+    assert result == pytest.approx(
+        case["current"],
+        rel=1e-10,
+    )

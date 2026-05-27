@@ -1,0 +1,7 @@
+def pytest_addoption(parser):
+    parser.addoption(
+        "--fast",
+        action="store_true",
+        default=False,
+        help="reduced test set",
+    )
