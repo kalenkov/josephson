@@ -6,11 +6,9 @@ from pathlib import Path
 import argparse
 import numpy as np
 
-# path to .so (build/)
 root = Path(__file__).resolve().parents[1]
-sys.path.append(str(Path(__file__).resolve().parent))
 sys.path.append(str(root / "build"))
-sys.path.append(str(root / "build-cmake"))
+
 import josephson
 
 def print_config(stream, prefix, config, rt_info, params):

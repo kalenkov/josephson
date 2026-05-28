@@ -6,11 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import interp1d
 
-# path to .so (build/)
 root = Path(__file__).resolve().parents[1]
-sys.path.append(str(Path(__file__).resolve().parent))
 sys.path.append(str(root / "build"))
-sys.path.append(str(root / "build-cmake"))
+
 import josephson
 
 def print_config(stream, prefix, config, rt_info):

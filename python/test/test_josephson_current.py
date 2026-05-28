@@ -8,7 +8,6 @@ import csv
 
 root = Path(__file__).resolve().parents[2]
 sys.path.append(str(root / "build"))
-sys.path.append(str(root / "build-cmake"))
 datafile = root / "test" / "data.csv"
 
 import josephson
