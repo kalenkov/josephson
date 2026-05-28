@@ -84,6 +84,7 @@ jobs:
             ninja-build \
             boost-devel \
             eigen3-devel \
+            pybind11-devel \
             python3-pytest \
             python3-numpy
 
