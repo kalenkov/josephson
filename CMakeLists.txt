@@ -71,13 +71,37 @@ target_link_libraries(josephson_test
 enable_testing()
 
 add_test(
-    NAME josephson_test
-    COMMAND josephson_test
+    NAME josephson_cpp_full
+    COMMAND josephson_test --log_level=message -- --seed 42
 )
 
 add_test(
-    NAME python_tests
-    COMMAND ${CMAKE_COMMAND} -E env
-        PYTHONPATH=${CMAKE_BINARY_DIR}
-        pytest ${CMAKE_SOURCE_DIR}/python/test
+    NAME josephson_cpp_fast
+    COMMAND josephson_test --log_level=message -- --fast --seed 42
+)
+
+set_tests_properties(josephson_cpp_fast PROPERTIES 
+    LABELS "fast"
+)
+
+add_test(
+    NAME python_tests_full
+    COMMAND pytest python/test
+)
+
+set_tests_properties(python_tests_full PROPERTIES
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
+
+add_test(
+    NAME python_tests_fast
+    COMMAND pytest python/test --fast
+)
+
+set_tests_properties(python_tests_fast PROPERTIES
+    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+)
+
+set_tests_properties(python_tests_fast PROPERTIES 
+    LABELS "fast"
 )
