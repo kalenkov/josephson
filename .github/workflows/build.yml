@@ -67,6 +67,38 @@ jobs:
       - name: Run tests (fast)
         run: ctest --test-dir build --output-on-failure -L fast
 
+  fedora:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+
+    steps:
+      - name: Install deps
+        run: |
+          dnf -y update
+          dnf -y install \
+            cmake \
+            gcc-c++ \
+            python3 \
+            python3-devel \
+            ninja-build \
+            boost-devel \
+            eigen3-devel \
+            python3-pytest \
+            python3-numpy
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -L fast
+
   windows:
     runs-on: windows-latest
 
