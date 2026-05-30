@@ -51,7 +51,7 @@ struct ArgsParser
             seed = std::random_device{}();
         }
         rng = std::mt19937(seed);
-        random_test_count = fast_mode ? 10 : 100;
+        random_test_count = fast_mode ? random_test_count/10 : random_test_count;
     }
 };
 

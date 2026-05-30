@@ -20,6 +20,8 @@ Numerical framework for calculating the current-phase relation in nonequilibrium
 - OpenMP
 - Python 3
 - pybind11
+- numpy
+- pytest
 
 ## Build instructions
 
@@ -30,7 +32,9 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j
 ```
 
-The project uses a standard CMake build system and produces all artifacts in the build directory. It has been tested on Fedora Linux with GCC and on Windows using the MSYS2 MinGW-w64 toolchain. The code is written in standard C++20 and is expected to be portable across modern Linux systems.
+The project uses a standard CMake-based build system, with all build artifacts generated in a dedicated build directory. It has been tested on Fedora Linux and Ubuntu Linux with GCC and Clang, as well as on Windows using the MSYS2 MinGW-w64 toolchain.
+
+The code is written in standard C++20 and is designed to be portable across modern Linux systems and Windows. Python bindings are provided via pybind11.
 
 ## Usage
 

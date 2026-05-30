@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  linux:
+  ubuntu-gcc:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,7 +34,7 @@ jobs:
       - name: Run tests (fast)
         run: ctest --test-dir build --output-on-failure -L fast
 
-  linux-clang:
+  ubuntu-clang:
     runs-on: ubuntu-latest
 
     steps:
@@ -67,7 +67,7 @@ jobs:
       - name: Run tests (fast)
         run: ctest --test-dir build --output-on-failure -L fast
 
-  fedora:
+  fedora-gcc:
     runs-on: ubuntu-latest
     container:
       image: fedora:latest
@@ -100,7 +100,40 @@ jobs:
       - name: Test
         run: ctest --test-dir build --output-on-failure -L fast
 
-  windows:
+  fedora-clang:
+    runs-on: ubuntu-latest
+    container:
+      image: fedora:latest
+
+    steps:
+      - name: Install deps
+        run: |
+          dnf -y update
+          dnf -y install \
+            cmake \
+            clang \
+            python3 \
+            python3-devel \
+            ninja-build \
+            boost-devel \
+            eigen3-devel \
+            pybind11-devel \
+            python3-pytest \
+            python3-numpy
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build -j
+
+      - name: Test
+        run: ctest --test-dir build --output-on-failure -L fast
+
+  windows-mingw:
     runs-on: windows-latest
 
     steps:
