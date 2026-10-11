@@ -53,6 +53,7 @@ for eV in [0.3, 0.1, 0.01]:
     print_config(sys.stdout, "# ", cfg, jc.runtime_info())
     phi = np.linspace(0.0, 2.0 * np.pi, int(5 / eV))
     J = jc.evaluate(phi)
+    # np.savetxt(f"J-phi_eV{eV:g}.txt", np.column_stack((phi, J)), header="#phi J")
     print("# phi J")
     for i in range(len(J)):
         print(phi[i], J[i])
